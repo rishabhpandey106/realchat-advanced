@@ -8,6 +8,8 @@ export default function Page() {
 
   return (
     <div>
+      <h1>WELCOME TO REALCHAT - ADVANCED</h1>
+      <br/>
       <div>
         <input onChange={(e)=>setMessage(e.target.value)} placeholder='message' />
         <button onClick={e => sendMessage(message)} >Send</button>
