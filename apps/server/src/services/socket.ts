@@ -1,4 +1,18 @@
 import {Server, Socket} from "socket.io"
+import Redis from "ioredis"
+
+const pub = new Redis({
+    host: 'redis-11150278-rishabh.a.aivencloud.com',
+    port: 21307,
+    username: 'default',
+    password: 'AVNS_ieYi7TdZvY0J4mJ6LN-',
+});
+const sub = new Redis({
+    host: 'redis-11150278-rishabh.a.aivencloud.com',
+    port: 21307,
+    username: 'default',
+    password: 'AVNS_ieYi7TdZvY0J4mJ6LN-',
+});
 
 class SocketService
 {
@@ -11,6 +25,7 @@ class SocketService
                 origin: "*",
             }
         });
+        sub.subscribe("MESSAGES");
     }
 
     public initListeners()
@@ -22,7 +37,14 @@ class SocketService
 
             socket.on('event:message', async ({message}:{message : String})=>{
                 console.log('new msg recieved',message);
+                await pub.publish("MESSAGES" , JSON.stringify({message}));
             })
+        })
+
+        sub.on("message",(channel , message)=>{
+            if(channel === "MESSAGES"){
+                io.emit("message" , message)
+            }         
         })
     }
 
