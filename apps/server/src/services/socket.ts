@@ -43,6 +43,7 @@ class SocketService
 
         sub.on("message",(channel , message)=>{
             if(channel === "MESSAGES"){
+                console.log('new msg on server', message);
                 io.emit("message" , message)
             }         
         })
