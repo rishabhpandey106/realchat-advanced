@@ -53,7 +53,6 @@ a {
 
 body {
   font-family: Arial, sans-serif;
-  /* background-color: #f0f0f0; */
   margin: 0;
   padding: 0;
 }
@@ -79,12 +78,16 @@ h1 {
   align-items: center;
 }
 
-input[type="text"] {
-  padding: 10px;
-  width: 70%;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
+input {
+	appearance: none;
+	border: none;
+	outline: none;
+	border-bottom: .2em solid #E91E63;
+	background: rgba(#E91E63, .2);
+	border-radius: .2em .2em 0 0;
+	padding: .4em;
+	color: #E91E63;
+  font-size: 18px;
 }
 
 button {
