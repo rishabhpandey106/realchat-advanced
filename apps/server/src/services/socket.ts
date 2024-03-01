@@ -1,5 +1,7 @@
 import {Server, Socket} from "socket.io"
 import Redis from "ioredis"
+import prismaClient from "./prisma";
+import { produceMessage } from "./kafka";
 
 const pub = new Redis({
     host: 'redis-11150278-rishabh.a.aivencloud.com',
@@ -41,10 +43,12 @@ class SocketService
             })
         })
 
-        sub.on("message",(channel , message)=>{
+        sub.on("message",async (channel , message)=>{
             if(channel === "MESSAGES"){
                 console.log('new msg on server', message);
                 io.emit("message" , message)
+                await produceMessage(message);
+                console.log('msg produced to kafka')
             }         
         })
     }
