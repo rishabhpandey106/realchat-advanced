@@ -50,6 +50,7 @@ class SocketService
                 const {message: msg, socketId} = JSON.parse(message) as {message: string, socketId: string};
                 io.emit("message" , {message: msg, socketId})
                 await produceMessage(message);
+                //added socket id coloring
                 console.log('msg produced to kafka')
             }         
         })
