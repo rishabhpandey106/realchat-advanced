@@ -16,6 +16,8 @@ RealChat Advanced is a highly scalable chat application designed for robust perf
 
 - **Real-time Chat:** Users can engage in real-time conversations with each other, with messages delivered instantly. RealChat Advanced uses WebSockets to enable real-time communication, ensuring that users can chat with each other without any delays.
 
+- **Private Room Chat:** Private room messaging allows users to have one-on-one conversations without other users being able to see their messages. Users can create private rooms and exchange messages privately within those rooms.
+
 - **High Performance:** RealChat Advanced is optimized for performance, providing a seamless chat experience even under heavy loads. By using efficient data storage solutions like PostgreSQL and Kafka, and leveraging Prisma for data management, RealChat Advanced ensures that it remains responsive and fast, even when handling a large number of users.
 
 
