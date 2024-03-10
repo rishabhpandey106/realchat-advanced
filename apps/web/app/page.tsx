@@ -10,11 +10,16 @@ export default function Page() {
   useEffect(() => {
     const uniqueSocketIds = [...new Set(messages.map(msg => msg.socketId))];
     const colors = uniqueSocketIds.reduce<{ [key: string]: string }>((acc, socketId, index) => {
-        acc[socketId] = `hsl(${index * 50}, 70%, 50%)`; // Assigning a color based on index
+        acc[socketId] = `hsl(${index * 50}, 70%, 50%)`;
         return acc;
     }, {});
     setUserColors(colors);
     }, [messages]);
+
+    const handleSendMessage = () => {
+      sendMessage(message);
+      setMessage('');
+    };
 
   return (
     <div className="container">
@@ -24,9 +29,10 @@ export default function Page() {
         <input
             className="message-input"
             onChange={(e) => setMessage(e.target.value)}
+            value={message}
             placeholder="Enter your message"
         />
-        <button className="send-button" onClick={(e) => sendMessage(message)}>
+        <button className="send-button" onClick={handleSendMessage}>
             Send
         </button>
     </div>

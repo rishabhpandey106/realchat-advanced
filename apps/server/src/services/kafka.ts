@@ -9,8 +9,8 @@ const kafka = new Kafka({
         ca: [fs.readFileSync(path.resolve("./ca.pem"), "utf-8")]
     },
     sasl: {
-        username: "avnadmin",
-        password: "AVNS_UojYh3VQD_2K_UmB3AT",
+        username: "000000000",
+        password: "000000000000",
         mechanism: "plain"
     }
 })
@@ -35,14 +35,25 @@ export async function produceMessage(message:string) {
     return true;
 }
 
+export async function producePrivateMessage(message:string) {
+    const producer = await createProducer();
+    await producer.send({
+        messages: [{key: `message-${Date.now()}`, value: message}],
+        topic: "PRIVATE_MESSAGES"
+    });
+    return true;
+}
+
+
 export async function startConsumer() {
     console.log('consumer is running ... ...')
     const consumer = kafka.consumer({groupId: "default"});
     await consumer.connect();
     await consumer.subscribe({topic: "MESSAGES", fromBeginning: true});
+    await consumer.subscribe({topic: "PRIVATE_MESSAGES", fromBeginning: true});
     await consumer.run({
         autoCommit: true,
-        eachMessage: async ({message , pause}) => {
+        eachMessage: async ({topic , message , pause}) => {
             if(!message.value) return;
             console.log('new msg recieved and updated to database');
             try{
@@ -54,7 +65,7 @@ export async function startConsumer() {
             } catch {
                 console.log('something went wrong');
                 pause();
-                setTimeout(()=> {consumer.resume([{topic: "MESSAGES"}])}, 60*1000);
+                setTimeout(()=> {consumer.resume([{topic}])}, 60*1000);
             }
             
         }

@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import {SocketProvider} from "../context/SocketProvider"
+// import PrivateMessagingPage from "../pages/private-messaging";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
